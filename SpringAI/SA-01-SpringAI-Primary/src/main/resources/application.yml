@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+spring:
+  application:
+    name: SA-01-SpringAI-Primary
+  ai:
+    zhipuai:
+      api-key: ${ZHIPUAI_API_KEY}
+    mcp:
+      client:
+        name: spring-ai-mcp-client
+        sse:
+          connections:
+            server1:
+              url: http://localhost:9090
+              sse-endpoint: /sse
+        toolcallback:
+          enabled: true
+app:
+  rag:
+    chroma-url: http://192.168.56.14:8000
+    tenant-name: TestTenant
+    database-name: TestDatabase
+    collection-name: TestCollection
+    # 使用 resources/docs 下的 SpringAI-Tutorial.pdf（相对路径，打包后可用）
+    pdf-path: classpath:docs/SpringAI-Tutorial.pdf
