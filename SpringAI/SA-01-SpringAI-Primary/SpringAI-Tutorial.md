@@ -1,3 +1,50 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [1. 快速上手](#1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B)
+  - [1.1 SpringAI 介绍](#11-springai-%E4%BB%8B%E7%BB%8D)
+  - [1.2 申请 API key](#12-%E7%94%B3%E8%AF%B7-api-key)
+  - [1.3 查看可用的模型](#13-%E6%9F%A5%E7%9C%8B%E5%8F%AF%E7%94%A8%E7%9A%84%E6%A8%A1%E5%9E%8B)
+  - [1.4 创建 Spring Boot 项目](#14-%E5%88%9B%E5%BB%BA-spring-boot-%E9%A1%B9%E7%9B%AE)
+  - [1.5 配置依赖管理](#15-%E9%85%8D%E7%BD%AE%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86)
+  - [1.6 引入 Spring AI 相关依赖](#16-%E5%BC%95%E5%85%A5-spring-ai-%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96)
+  - [1.7 添加配置文件](#17-%E6%B7%BB%E5%8A%A0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+  - [1.8 使用 Chat Client 完成大模型调用](#18-%E4%BD%BF%E7%94%A8-chat-client-%E5%AE%8C%E6%88%90%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%B0%83%E7%94%A8)
+- [2. 结构化输出](#2-%E7%BB%93%E6%9E%84%E5%8C%96%E8%BE%93%E5%87%BA)
+  - [2.1 输出普通对象](#21-%E8%BE%93%E5%87%BA%E6%99%AE%E9%80%9A%E5%AF%B9%E8%B1%A1)
+  - [2.2 输出 List 对象](#22-%E8%BE%93%E5%87%BA-list-%E5%AF%B9%E8%B1%A1)
+- [3. 流式响应](#3-%E6%B5%81%E5%BC%8F%E5%93%8D%E5%BA%94)
+  - [3.1 核心概念](#31-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5)
+  - [3.2 技术实现](#32-%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0)
+- [4. 提示词模板（PromptTemplate）](#4-%E6%8F%90%E7%A4%BA%E8%AF%8D%E6%A8%A1%E6%9D%BFprompttemplate)
+  - [4.1 基本概念](#41-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+  - [4.2 实际场景](#42-%E5%AE%9E%E9%99%85%E5%9C%BA%E6%99%AF)
+  - [4.3 代码演示](#43-%E4%BB%A3%E7%A0%81%E6%BC%94%E7%A4%BA)
+- [5. 多厂商多模型自定义配置](#5-%E5%A4%9A%E5%8E%82%E5%95%86%E5%A4%9A%E6%A8%A1%E5%9E%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE)
+- [6. 会话保持(Chat memory)](#6-%E4%BC%9A%E8%AF%9D%E4%BF%9D%E6%8C%81chat-memory)
+  - [6.1 介绍](#61-%E4%BB%8B%E7%BB%8D)
+  - [6.2 代码示例](#62-%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B)
+- [7. 工具调用（function calling）](#7-%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8function-calling)
+  - [7.1 介绍](#71-%E4%BB%8B%E7%BB%8D)
+  - [7.2 代码示例](#72-%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B)
+- [8. MCP 集成(client+server)](#8-mcp-%E9%9B%86%E6%88%90clientserver)
+  - [8.1 介绍](#81-%E4%BB%8B%E7%BB%8D)
+  - [8.2 代码示例](#82-%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B)
+  - [8.3 集成 MCP Server](#83-%E9%9B%86%E6%88%90-mcp-server)
+  - [8.4 集成 MCP Client](#84-%E9%9B%86%E6%88%90-mcp-client)
+- [9. 集成RAG](#9-%E9%9B%86%E6%88%90rag)
+  - [9.1 介绍](#91-%E4%BB%8B%E7%BB%8D)
+  - [9.2 核心逻辑](#92-%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91)
+  - [9.3 关键组件与优势](#93-%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6%E4%B8%8E%E4%BC%98%E5%8A%BF)
+  - [9.4 一句话总结](#94-%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93)
+  - [9.5 代码示例](#95-%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B)
+  - [9.6 安装向量库 Chroma](#96-%E5%AE%89%E8%A3%85%E5%90%91%E9%87%8F%E5%BA%93-chroma)
+  - [9.7 引入相关依赖](#97-%E5%BC%95%E5%85%A5%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96)
+  - [9.8 代码集成](#98-%E4%BB%A3%E7%A0%81%E9%9B%86%E6%88%90)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 > 本文档案例位于`SA-01-SpringAI-Primary`模块和`SA-01-SpringAI-Primary-MCP-Server`模块。安装并启动 向量库Chroma，然后依次启动`SA-01-SpringAI-Primary-MCP-Server`模块、`SA-01-SpringAI-Primary`模块，即可运行案例程序
 
 ## 1. 快速上手

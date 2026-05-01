@@ -1,17 +1,32 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [1.环境概述](#1%E7%8E%AF%E5%A2%83%E6%A6%82%E8%BF%B0)
+- [2.修复 CentOS7 YUM 源（EOL 必做）](#2%E4%BF%AE%E5%A4%8D-centos7-yum-%E6%BA%90eol-%E5%BF%85%E5%81%9A)
+- [3.准备编译环境](#3%E5%87%86%E5%A4%87%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83)
+- [4.编译安装 OpenSSL 1.1.1w](#4%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85-openssl-111w)
+- [5.编译安装 SQLite 3.42.0](#5%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85-sqlite-3420)
+- [6. 编译安装 Python 3.10.14](#6-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85-python-31014)
+- [7.安装并启动 ChromaDB](#7%E5%AE%89%E8%A3%85%E5%B9%B6%E5%90%AF%E5%8A%A8-chromadb)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 CentOS7 编译安装 Python3.10 并部署 ChromaDB
 
 ### 1.环境概述
 
 - **系统版本**：CentOS Linux 7.8.2003（Core）
+- **环境说明**：当前为全新创建的 CentOS 实例（最小化环境），无历史业务软件与自定义运行时干扰。
 - **文档概述**：在 CentOS7 上通过源码编译安装 `OpenSSL 1.1.1w`、`SQLite 3.42.0`、`Python 3.10.14`，并成功运行 `ChromaDB` 服务。
 - **细节说明**：
-  - `OpenSSL 1.1.1w`：CentOS7 默认 OpenSSL 版本较低，容易导致 Python 的 SSL 模块编译失败。
-  - `SQLite 3.42.0`：ChromaDB 依赖较新 SQLite，系统自带版本通常不满足要求。
-  - 系统 GCC 版本较低，需用 `devtoolset-10` 升级编译环境。
+    - `OpenSSL 1.1.1w`：CentOS7 默认 OpenSSL 版本较低，容易导致 Python 的 SSL 模块编译失败。
+    - `SQLite 3.42.0`：ChromaDB 依赖较新 SQLite，系统自带版本通常不满足要求。
+    - 系统 GCC 版本较低，需用 `devtoolset-10` 升级编译环境。
 
 ### 2.修复 CentOS7 YUM 源（EOL 必做）
 
-修复 YUM 源（解决 CentOS7 EOL 官方源失效问题）。CentOS7 已 EOL，官方 `mirrorlist.centos.org` 常失效。需要改为可用的 Vault 源（示例为阿里云）
+修复 YUM 源（解决 CentOS7 EOL 官方源失效问题）。CentOS7 已 EOL，官方 `mirrorlist.centos.org` 常失效。需要改为可用的 Vault源（示例为阿里云）
 
 ```bash
 # CentOS7 已停止维护，官方 mirrorlist.centos.org 已无法解析，必须替换为阿里云 Vault 源
@@ -153,7 +168,7 @@ sudo wget https://www.sqlite.org/2023/sqlite-autoconf-3420000.tar.gz
 # 或者
 # 在 Windows 上下载这个文件。SQLite 下载地址：https://www.sqlite.org/2023/sqlite-autoconf-3420000.tar.gz
 # win11上传Linux服务器
-# scp -i "D:\abcd\VM\server04\.vagrant\machines\default\virtualbox\private_key" "C:\Users\22418\Downloads\sqlite-autoconf-3420000.tar.gz" vagrant@192.168.56.14:/home/vagrant/
+# scp -i "D:\abcd\VM\server04\.vagrant\machines\default\virtualbox\private_key" "C:\Downloads\sqlite-autoconf-3420000.tar.gz" vagrant@192.168.56.14:/home/vagrant/
 
 
 # 3.解压
