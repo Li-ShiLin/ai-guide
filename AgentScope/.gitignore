@@ -1,0 +1,68 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.flattened-pom.xml
+
+# Maven Wrapper：默认忽略下载的 jar（若需入库 wrapper jar，删除下一行）
+.mvn/wrapper/maven-wrapper.jar
+
+### IntelliJ IDEA ###
+# 与子模块 AS-01-AgentScope-QuickStart 一致：不提交 IDE 私有配置
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### Gradle / 其他构建目录 ###
+.gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### 日志与本地环境 ###
+*.log
+*.log.*
+.env
+.env.local
+*.local
+
+### 操作系统 ###
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+### 临时与备份 ###
+*.tmp
+*.bak
+*.swp
+*~
+
+### Java 编译产物（落在源码树外时的兜底） ###
+*.class

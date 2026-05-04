@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.8</version>
+        <relativePath/>
+    </parent>
+    <groupId>com.action.agentscope</groupId>
+    <artifactId>AS-01-AgentScope-QuickStart</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>AS-01-AgentScope-QuickStart</name>
+    <description>AgentScope Java （Spring Boot + Ollama + Studio）</description>
+    <url/>
+    <licenses>
+        <license/>
+    </licenses>
+    <developers>
+        <developer/>
+    </developers>
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+
+    <properties>
+        <agentscope.version>1.0.10</agentscope.version>
+        <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- 统一管理依赖版本：本模块声明同名坐标且不写 version 时，采用此处版本 -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.agentscope</groupId>
+                <artifactId>agentscope-spring-boot-starter</artifactId>
+                <version>${agentscope.version}</version>
+            </dependency>
+            <!--
+                AgentScope Java（后端 SDK） 和 AgentScope Studio（前端可视化平台）是两个完全独立的项目，版本号各自独立发布，不需要、也无法强制一一对应。
+                它们之间通过 HTTP 协议通信，遵循向后兼容设计，不绑定版本号。
+                官方架构理念就是：松耦合、协议互通、跨框架兼容。
+                AgentScope Java 和 AgentScope Studio 是两个独立的项目，版本号各自独立发布，不需要保持一致，也无法完全对应。
+                它们通过稳定的 HTTP 协议通信，遵循松耦合、跨框架、向后兼容的设计理念，因此不存在版本强绑定关系
+            -->
+            <dependency>
+                <groupId>io.agentscope</groupId>
+                <artifactId>agentscope-extensions-studio</artifactId>
+                <version>${agentscope.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.agentscope</groupId>
+                <artifactId>agentscope-agui-spring-boot-starter</artifactId>
+                <version>${agentscope.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>5.3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.socket</groupId>
+                <artifactId>socket.io-client</artifactId>
+                <version>2.1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-api</artifactId>
+                <version>1.49.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-exporter-otlp</artifactId>
+                <version>1.49.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry.instrumentation</groupId>
+                <artifactId>opentelemetry-reactor-3.1</artifactId>
+                <version>2.25.0-alpha</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Spring Boot 核心起步依赖（自动配置、默认日志等；不包含 Web MVC/WebFlux） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <!-- Spring MVC + 嵌入式 Tomcat：阻塞式 Web / REST 接口 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- Spring WebFlux + 嵌入式 Netty：响应式 Web（与 AgentScope Reactor 风格运行时契合） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <!-- AgentScope Spring Boot 起步依赖（引入 AgentScope 核心能力并完成 Spring 集成配置） -->
+        <dependency>
+            <groupId>io.agentscope</groupId>
+            <artifactId>agentscope-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- AgentScope Studio 扩展：接入 Studio Web 的可视化调试与 Trace / Hook -->
+        <dependency>
+            <groupId>io.agentscope</groupId>
+            <artifactId>agentscope-extensions-studio</artifactId>
+        </dependency>
+        <!-- OkHttp：HTTP 客户端（REST API、gRPC-Gateway HTTP 等调用场景） -->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+        </dependency>
+        <!-- Socket.IO Java 客户端：与 Studio 等服务端的 Socket.IO 通道实时通信 -->
+        <dependency>
+            <groupId>io.socket</groupId>
+            <artifactId>socket.io-client</artifactId>
+        </dependency>
+        <!-- OpenTelemetry API：手动或 SDK 使用的链路追踪 API -->
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-api</artifactId>
+        </dependency>
+        <!-- OTLP Exporter：将 Trace 通过 OTLP 导出至 Collector / 观测后端 -->
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-otlp</artifactId>
+        </dependency>
+        <!-- OTEL Reactor 仪表化：为 Mono/Flux 等响应式链路补齐 Span -->
+        <dependency>
+            <groupId>io.opentelemetry.instrumentation</groupId>
+            <artifactId>opentelemetry-reactor-3.1</artifactId>
+        </dependency>
+        <!-- Lombok：编译期注解处理器，减少 getter/setter、建造者等样板代码 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.42</version>
+        </dependency>
+        <!-- Netty DNS 解析原生库（macOS ARM64）：在 Apple Silicon 上加速异步 DNS，常与 Netty/WebFlux 一起使用 -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-resolver-dns-native-macos</artifactId>
+            <classifier>osx-aarch_64</classifier>
+        </dependency>
+        <!-- dotenv-java：启动时加载 .env 并写入 System Property（与图中 Dotenv API 一致） -->
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+
+        <!-- 测试起步依赖：JUnit 5、Mockito、Spring Test、AssertJ 等 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
